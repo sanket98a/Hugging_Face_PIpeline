@@ -1,0 +1,14 @@
+git+https://github.com/huggingface/transformers
+datasets 
+loralib 
+sentencepiece
+bitsandbytes 
+accelerate 
+xformers
+langchain
+peft
+peft 
+chromadb
+unstructured
+sentence_transformers
+pypdf
