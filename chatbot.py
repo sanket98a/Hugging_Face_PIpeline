@@ -96,15 +96,26 @@ def load_llm(model_id,model_subname=None,max_length=512,temperature=0.7):
         # Load configuration from the model to avoid warnings
         generation_config = GenerationConfig.from_pretrained(model_id)
         # LLM Pipeline added
-        pipe=pipeline(
+        # pipe=pipeline(
+        # "text-generation",
+        # model=model,
+        # tokenizer=tokenizer,
+        # torch_dtype=torch.bfloat16,
+        # # pad_token_id=tokenizer.eos_token_id,
+        # temperature=temperature,
+        # max_length=max_length,
+        # generation_config=generation_config)
+        pipe = pipeline(
         "text-generation",
         model=model,
         tokenizer=tokenizer,
-        torch_dtype=torch.bfloat16,
-        # pad_token_id=tokenizer.eos_token_id,
-        temperature=temperature,
-        max_length=max_length,
-        generation_config=generation_config)
+        # max_length=100,
+        temperature=0,
+        max_new_tokens=512,
+        top_p=0.95,
+        repetition_penalty=1.15,
+        generation_config=generation_config,
+    )
         # Load model
         hug_model=HuggingFacePipeline(pipeline=pipe)
         return hug_model
@@ -121,8 +132,8 @@ def qa_bot():
         embedding_function=embeddings,
         client_settings=CHROMA_SETTINGS,
     )
-    # model_subname="llama-Llama-2-7B-Chat-GGML"
-    # model_id="TheBloke/2-7b-chat.ggmlv3.q2_K.bin"
+    # model_id="llama-Llama-2-7B-Chat-GGML"
+    # model_subname="TheBloke/2-7b-chat.ggmlv3.q2_K.bin"
     ## GPTQ Quantized Model
     model_id="TheBloke/Llama-2-7b-Chat-GPTQ"
     model_subname="gptq_model-4bit-128g.safetensors"
@@ -138,7 +149,15 @@ def final_result(query):
     response = qa_result({'query': query})
     return response
 
-#chainlit code
+# while True:
+#     query=input("Query ::")
+#     ans=final_result(query)
+#     print('*'*50)
+#     print(ans)
+#     print('*'*50)
+
+
+# chainlit code
 @cl.on_chat_start
 async def start():
     chain = qa_bot()

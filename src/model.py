@@ -65,7 +65,7 @@ class LLMModel:
     def model_initialize(self,quantization_config:object=None,
                          quantization=False,
                          quantization_type:str="BitsAndBytes")->object:
-        try:
+        # try:
             logging.info(f"Loading Model: {self.model_id}, on: {self.device_type}")
             logging.info("This action can take a few minutes!")
 
@@ -121,7 +121,8 @@ class LLMModel:
                             model_basename=self.model_basename ,
                             use_safetensors=True,
                             trust_remote_code=True,
-                            device="cuda:0",
+                            low_cpu_mem_usage=True,
+                            # device="cuda:0",
                             use_triton=False,
                             quantize_config=None)
                         return model
@@ -147,10 +148,10 @@ class LLMModel:
                     print("Using Llamamodel")
                     model = LlamaForCausalLM.from_pretrained(self.model_id)
                     return model
-        except:
-            pass
+        # except:
+        #     pass
         
-    def tokenizer_initialize(self)->object:
+    def tokenizer_initialize(self):
         # try:
             if ".ggml" in self.model_basename:
                 logging.info(f"Tokenizer Not Required:{self.model_id}")
