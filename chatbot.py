@@ -95,7 +95,7 @@ def load_llm(model_id,model_subname=None,max_length=512,temperature=0.7):
         tokenizer=model_loading.tokenizer_initialize()
         # Load configuration from the model to avoid warnings
         generation_config = GenerationConfig.from_pretrained(model_id)
-        # LLM Pipeline
+        # LLM Pipeline added
         pipe=pipeline(
         "text-generation",
         model=model,
