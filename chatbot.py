@@ -84,7 +84,7 @@ def retrieval_qa_chain(llm, prompt, db):
 
 def load_llm(model_id,model_subname=None,max_length=512,temperature=0.7):
     if ".ggml" in model_subname:
-        model_loading=LLMModel(model_id=model_id,model_basename=model_subname)
+        model_loading=LLMModel(model_id=model_id,model_basename=model_subname,device_type='gpu')
         model=model_loading.model_initialize()
         print("Model Loaded")
         return model

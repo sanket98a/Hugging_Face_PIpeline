@@ -5,7 +5,8 @@ In this `model.py` file created the Open Source Hugging Face LLM Model Loading P
 # import torch
 ## from peft import PeftModel, PeftConfig
 from transformers import (AutoModelForCausalLM,
-                           AutoTokenizer,  
+                           AutoTokenizer, 
+                           BitsAndBytesConfig, 
                            pipeline,
                            LlamaForCausalLM)
 import logging
@@ -102,8 +103,8 @@ class LLMModel:
                         if self.device_type.lower() == "mps":
                             kwargs["n_gpu_layers"] = 1000
                         if self.device_type.lower() == "cuda":
-                            kwargs["n_gpu_layers"] = 1000
-                            kwargs["n_batch"] = max_ctx_size
+                            kwargs["n_gpu_layers"] = 30
+                            kwargs["n_batch"] = 300
                         print("GGML Model Loaded Succesfully.")
                         return LlamaCpp(**kwargs)
                     
