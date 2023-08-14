@@ -5,8 +5,7 @@ In this `model.py` file created the Open Source Hugging Face LLM Model Loading P
 # import torch
 ## from peft import PeftModel, PeftConfig
 from transformers import (AutoModelForCausalLM,
-                           AutoTokenizer, 
-                           BitsAndBytesConfig, 
+                           AutoTokenizer,  
                            pipeline,
                            LlamaForCausalLM)
 import logging

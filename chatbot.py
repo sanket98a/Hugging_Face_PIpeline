@@ -132,11 +132,11 @@ def qa_bot():
         embedding_function=embeddings,
         client_settings=CHROMA_SETTINGS,
     )
-    # model_id="llama-Llama-2-7B-Chat-GGML"
-    # model_subname="TheBloke/2-7b-chat.ggmlv3.q2_K.bin"
+    model_id="llama-Llama-2-7B-Chat-GGML"
+    model_subname="TheBloke/llama-2-7b-chat.ggmlv3.q4_0.bin"
     ## GPTQ Quantized Model
-    model_id="TheBloke/Llama-2-7b-Chat-GPTQ"
-    model_subname="gptq_model-4bit-128g.safetensors"
+    # model_id="TheBloke/Llama-2-7b-Chat-GPTQ"
+    # model_subname="gptq_model-4bit-128g.safetensors"
     llm = load_llm(model_id=model_id,model_subname=model_subname)
     qa_prompt = set_custom_prompt()
     qa = retrieval_qa_chain(llm, qa_prompt, db)
