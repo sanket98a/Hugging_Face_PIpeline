@@ -101,7 +101,7 @@ def load_llm(model_id,model_subname=None,max_length=512,temperature=0.7):
         model=model,
         tokenizer=tokenizer,
         torch_dtype=torch.bfloat16,
-        pad_token_id=tokenizer.eos_token_id,
+        # pad_token_id=tokenizer.eos_token_id,
         temperature=temperature,
         max_length=max_length,
         generation_config=generation_config)
