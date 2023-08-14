@@ -168,7 +168,7 @@ class LLMModel:
                      bnb_4bit_compute_dtype: None = None,
                      bnb_4bit_use_double_quant=False,
                      max_new_tokens:int=512,
-                     temperature:int|float=0.7,
+                     temperature:float=0.7,
                      quantization:bool=False,
                      torch_dtype:any=None):
         try:
