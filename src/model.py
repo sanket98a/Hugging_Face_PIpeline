@@ -10,12 +10,16 @@ from transformers import (AutoModelForCausalLM,
                            pipeline,
                            LlamaForCausalLM)
 import logging
+from huggingface_hub import login
 # from logger import logging
 from huggingface_hub import hf_hub_download
 from langchain.llms import HuggingFacePipeline, LlamaCpp
 from auto_gptq import AutoGPTQForCausalLM
 import torch
 
+access_token_read ="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"
+login(token = access_token_read)
+logging.info("Login Successfully.")
 class LLMModel:
     """Hugging Face Open Source Model Loading..
     """
@@ -120,6 +124,7 @@ class LLMModel:
                             device="cuda:0",
                             use_triton=False,
                             quantize_config=None)
+                        return model
                     
                 elif (self.device_type.lower() == "cuda"):  
                     # The code supports all huggingface models that ends with -HF or which have a .bin
