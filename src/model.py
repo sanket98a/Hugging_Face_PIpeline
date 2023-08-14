@@ -103,7 +103,7 @@ class LLMModel:
                         if self.device_type.lower() == "mps":
                             kwargs["n_gpu_layers"] = 1000
                         if self.device_type.lower() == "cuda":
-                            kwargs["n_gpu_layers"] = 30
+                            kwargs["n_gpu_layers"] = 200
                             kwargs["n_batch"] = 500
                             kwargs["temperature"] = 0.01
                         print("GGML Model Loaded Succesfully.")
