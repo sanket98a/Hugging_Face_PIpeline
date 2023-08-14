@@ -108,11 +108,10 @@ class LLMModel:
                         # The code supports all huggingface models that ends with GPTQ and have some variation
                         # of .no-act.order or .safetensors in their HF repo.
                         logging.info("Using AutoGPTQForCausalLM for quantized models")
-
                         if ".safetensors" in self.model_basename :
                             # Remove the ".safetensors" ending if present
                             self.model_basename = self.model_basename .replace(".safetensors", "")
-
+                        print("Model Name ::",self.model_basename )
                         model = AutoGPTQForCausalLM.from_quantized(
                             self.model_id,
                             model_basename=self.model_basename ,
@@ -147,19 +146,19 @@ class LLMModel:
             pass
         
     def tokenizer_initialize(self)->object:
-        try:
+        # try:
             if ".ggml" in self.model_basename:
                 logging.info(f"Tokenizer Not Required:{self.model_id}")
                 
             else:
                 print("Tokenizer Loading Start..")
                 logging.info(f"Tokenizer Loading start..")
-                tokenizer = AutoTokenizer.from_pretrained(self.model_id,use_fast=True)
+                tokenizer = AutoTokenizer.from_pretrained(self.model_id,use_fast=True,use_auth_token=True)
                 print("Tokenizer Loaded Succesfully..")
                 logging.info("Tokenizer loaded.")
                 return tokenizer
-        except:
-            pass
+        # except:
+        #     pass
         
     def model_pipeline(self,
                        task:str="text-generation",

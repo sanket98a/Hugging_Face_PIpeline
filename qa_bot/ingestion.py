@@ -11,15 +11,12 @@ from qa_bot.constant import (
     CHROMA_SETTINGS,
     PERSIST_DIRECTORY,
     SOURCE_DIRECTORY,
-    EMBEDDING_MODEL_NAME
 )
 
 with open('config/config.yml', 'r') as file:
     config = yaml.safe_load(file)
 
 print(config)
-
-EMBEDDING_TYPE='n'
 
 # check the device 
 if torch.cuda.is_available():
@@ -36,6 +33,7 @@ def create_vector_db():
     # path='data/review_english_cleaned.csv'
     # loader=CSVLoader(file_path=file_path,encoding="utf8")
     documents = loader.load()
+    
     logging.info(f"Documnet Loaded : {SOURCE_DIRECTORY}")
     
     text_splitter = RecursiveCharacterTextSplitter(chunk_size= config['CHUNK_SIZE'],
@@ -48,13 +46,13 @@ def create_vector_db():
         print("HuggingFaceEmbeddings")
         embeddings = HuggingFaceEmbeddings(model_name=config['EMBEDDING_MODEL_NAME'],
                                         model_kwargs={"device": device_type}) 
-        logging.info(f"HuggingFaceEmbeddings the Document : {EMBEDDING_MODEL_NAME}")
+        logging.info(f"HuggingFaceEmbeddings the Document : {config['EMBEDDING_MODEL_NAME']}")
     else:
         print("HuggingFaceInstructEmbeddings")
         embeddings = HuggingFaceInstructEmbeddings(
             model_name=config['EMBEDDING_MODEL_NAME'],
             model_kwargs={"device": device_type})
-        logging.info(f"HuggingFaceInstructEmbeddings the Document : {EMBEDDING_MODEL_NAME}")
+        logging.info(f"HuggingFaceInstructEmbeddings the Document : {config['EMBEDDING_MODEL_NAME']}")
 
     db = Chroma.from_documents(
         texts,

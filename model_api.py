@@ -8,15 +8,24 @@ from src.model  import LLMModel
 # app = FastAPI()
 app = Flask(__name__)
 
-# Load the LLM model and tokenizer
-# model_name = "your_model_name_here"  # Replace with the name of your trained model (e.g., "gpt2", "gpt2-medium", etc.)
-# model_path ='gpt2-medium' #"./falcon-7b-instruct/" 
-# tokenizer = AutoTokenizer.from_pretrained(model_path)
-# model = AutoModelForCausalLM.from_pretrained(model_path,trust_remote_code=True,)
+# Load the Full LLM model and tokenizer
+# model_id ='gpt2-medium' #"./falcon-7b-instruct/"  # Replace with the name of your trained model (e.g., "gpt2", "gpt2-medium", etc.)
 
-model_id="TheBloke/Llama-2-7B-Chat-GGML"
-model_subname="llama-2-7b-chat.ggmlv3.q2_K.bin"
 
+
+## GGML Quantized Models
+# model_id="TheBloke/Llama-2-7B-Chat-GGML"
+# model_subname="llama-2-7b-chat.ggmlv3.q2_K.bin"
+
+## GPTQ Quantized Model
+model_id="TheBloke/Llama-2-7b-Chat-GPTQ"
+model_subname="gptq_model-4bit-128g.safetensors"
+
+## Self Quantized Model Loading and Quantization
+
+
+
+# GGML model Loading
 if ".ggml" in model_subname:
     def generate_text(prompt, max_length=50,temp=0.7):
         model_loading=LLMModel(model_id=model_id,model_basename=model_subname)
@@ -24,6 +33,7 @@ if ".ggml" in model_subname:
         print("Model Loaded")
         return model(prompt)
 else:
+    # Others Model Loading
     model_loading=LLMModel(model_id=model_id,model_basename=model_subname)
     model=model_loading.model_initialize()
     tokenizer=model_loading.tokenizer_initialize()
@@ -54,7 +64,7 @@ def generate_text_api():
     if not prompts:
         return jsonify({"error": "Invalid input. 'prompts' field must be a non-empty list."}), 400
 
-    # generated_texts = [f"Generated: {prompt} (Max Length: {max_length})" for prompt in prompts]
+   
     generated_texts = [generate_text(prompt, max_length,temp) for prompt in prompts]
     return jsonify({"generated_texts": generated_texts})
 
