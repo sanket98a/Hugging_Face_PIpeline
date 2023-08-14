@@ -158,7 +158,7 @@ class LLMModel:
             else:
                 print("Tokenizer Loading Start..")
                 logging.info(f"Tokenizer Loading start..")
-                tokenizer = AutoTokenizer.from_pretrained(self.model_id,use_fast=True,use_auth_token=True)
+                tokenizer = AutoTokenizer.from_pretrained(self.model_id,use_fast=True)
                 print("Tokenizer Loaded Succesfully..")
                 logging.info("Tokenizer loaded.")
                 return tokenizer

@@ -96,7 +96,7 @@ def load_llm(model_id,model_subname=None,max_length=512,temperature=0.7):
         # Load configuration from the model to avoid warnings
         generation_config = GenerationConfig.from_pretrained(model_id)
         # LLM Pipeline
-        pipline=pipeline(
+        pipe=pipeline(
         "text-generation",
         model=model,
         tokenizer=tokenizer,
@@ -106,7 +106,7 @@ def load_llm(model_id,model_subname=None,max_length=512,temperature=0.7):
         max_length=max_length,
         generation_config=generation_config)
         # Load model
-        hug_model=HuggingFacePipeline(pipeline=pipline)
+        hug_model=HuggingFacePipeline(pipeline=pipe)
         return hug_model
 
 #QA Model Function
